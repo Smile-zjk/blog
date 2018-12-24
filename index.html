@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/24/test/" itemprop="url">test</a></h1>
+                <a class="post-title-link" href="/2018/12/24/test/" itemprop="url">Git和GitHub笔记</a></h1>
         
 
         <div class="post-meta">
@@ -288,7 +288,7 @@
 
           
           
-             <span id="/2018/12/24/test/" class="leancloud_visitors" data-flag-title="test">
+             <span id="/2018/12/24/test/" class="leancloud_visitors" data-flag-title="Git和GitHub笔记">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -321,7 +321,110 @@
       
         
           
-            <h1 id="test"><a href="#test" class="headerlink" title="test"></a>test</h1>
+            <h1 id="Git和GitHub笔记"><a href="#Git和GitHub笔记" class="headerlink" title="Git和GitHub笔记"></a>Git和GitHub笔记</h1><h3 id="设置签名"><a href="#设置签名" class="headerlink" title="设置签名"></a>设置签名</h3><ul>
+<li>形式<ul>
+<li>用户名   <code>tom</code></li>
+<li>Email地址： <a href="mailto:`goodMorning@atguigu.com" target="_blank" rel="noopener">`goodMorning@atguigu.com</a>`<ul>
+<li>作用：区分不同开发人员的身份</li>
+<li>辨析：这里设置的签名和登录远程库（代码托管中心）的账号、密码没有任何关系</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>命令</p>
+<ul>
+<li><p>项目级别/仓库级别：仅在当前本地库范围内有效</p>
+   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name tom_p</span><br><span class="line">git  config user.email goodMorning@atguigu.com</span><br></pre></td></tr></table></figure>
+<ul>
+<li>信息保存目录 .git/config</li>
+</ul>
+</li>
+<li><p>系统用户级别登录当前操作系统的用户范围</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name tom_g</span><br><span class="line">git config --global user.email goodMorning@atguigu.com</span><br></pre></td></tr></table></figure>
+<ul>
+<li>信息保存目录 <code>~/.gitconfig</code></li>
+<li>级别优先级</li>
+<li>就近原则：项目级别优先于系统用户级别</li>
+</ul>
+</li>
+<li>状态查看操作<br> <code>git status</code>  查看工作区、暂存区状态  </li>
+<li>添加操作<br> <code>git add [file name]</code> 将工作区的“新建/修改”添加到暂存区  </li>
+<li>提交操作<br> <code>git commit -m &quot;commit message&quot; [file name]</code> 将暂存区的内容提交到本地库  </li>
+<li>查看历史记录<br> <code>git log</code> 最完整形式<br> <code>git log --pretty=oneline</code>  每个只显示一行<br> <code>git log --oneline</code><br> <code>git reflog</code><br> <code>HEAD@{移动到当前版本需要多少步}</code>  </li>
+<li>基于索引值操作<br> <code>git reset --hard [局部索引值]</code><br>使用^符号：只能后退   <code>git reset --hard HEAD^</code>    一个^表示后退一步，n个表示后退n步<br>使用~符号：只能后退   <code>git reset --hard HEAD~3</code> 后退三步  <ul>
+<li>reset命令的三个参数对比<br><code>--soft</code> 仅仅在本地库移动HEAD指针<br><code>--mixed</code> 在本地移动HEAD指针，重置缓存区<br><code>--hard</code> 在本地库移动HEAD指针，重置缓存区，重置工作区</li>
+</ul>
+</li>
+<li><p>分支操作</p>
+<ul>
+<li>创建分支<br><code>git branch [分支名]</code></li>
+<li>查看分支<br><code>git branch -v</code></li>
+<li>切换分支<br><code>git checkout [分支名]</code></li>
+<li>合并分支<ul>
+<li>第一步：切换到接受修改的分支上<br><code>git checkout [分支名]</code></li>
+<li>第二步：执行merge命令<br>`git merge [分支名]·</li>
+</ul>
+</li>
+<li><p>解决冲突</p>
+<ul>
+<li><p>冲突的表现</p>
+</li>
+<li><p>冲突的解决</p>
+<ul>
+<li>第一步：编辑文件，删除特殊符号</li>
+<li>第二步：把文件修改到满意的程度，保存退出</li>
+<li>第三步：git add [文件名]</li>
+<li>第四步：git commit -m “备注”<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote -v 查看当前所有远程地址别名</span><br><span class="line">git remote add [别名] [远程地址]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>推送<br><code>git push [别名] [分支名]</code></li>
+<li>克隆  <ul>
+<li>命令<br><code>git clone [远程地址]</code></li>
+<li>效果  <ul>
+<li>完整的把远程库下载到本地</li>
+<li>创建origin远程地址别名</li>
+<li>初始化本地库</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>拉取  <pre><code>pull = fetch+merge
+git fetch [远程库地址别名] [分支名]
+git merge [远程库地址别名] [分支名]
+git pull [远程库地址别名] [分支名]
+</code></pre></li>
+<li>解决冲突<ul>
+<li>要点<ul>
+<li>如果不是基于GitHub远程库的最新版所做的修改，不能推送，必须先拉取</li>
+<li>拉取下来后如果进入冲突状态，则按照“分支冲突解决”操作解决即可</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>SSH登录<ul>
+<li>进入当前用户的家目录<br><code>$ cd ~</code></li>
+<li>删除.ssh目录<br><code>rm -rvf .ssh</code></li>
+<li>运行命令生成.ssh密钥目录<br><code>$ ssh-keygen -t rsa -C Smile_zjk@qq.com</code></li>
+<li>进入.ssh 目录查看文件列表<br><code>$ cd .ssh</code><br><code>$ ls -lF</code></li>
+<li>查看<em>id_ras.pub</em> 文件内容</li>
+<li>复制<em>id_ras.pub</em>文件内容，登录<em>GitHub</em>，点击<strong>用户头像—&gt;Settings—&gt;SSH and GPG keys</strong><br><code>New SSH Key</code></li>
+<li>输入复制的密钥信息</li>
+<li>回到Git bash 创建远程地址别名</li>
+<li>git remote add origin_ssh <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:Smile_zjk/test.git</li>
+<li>推送文件进行测试</li>
+</ul>
+</li>
+</ul>
+
           
         
       
