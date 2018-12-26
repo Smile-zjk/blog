@@ -91,7 +91,10 @@
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/005P5V6Qly1fyju6qdc2rj308n01iq2r.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/mw690/005P5V6Qly1fyju6qdabyj30dt01ojr9.jpg">
 <meta property="og:image" content="http://wx3.sinaimg.cn/mw690/005P5V6Qly1fyju6qh03ej30j506aadb.jpg">
-<meta property="og:updated_time" content="2018-12-26T01:48:03.990Z">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/005P5V6Qly1fyjuva8t0ej30c9044jtq.jpg">
+<meta property="og:image" content="http://wx1.sinaimg.cn/mw690/005P5V6Qly1fyjuvcyotzj30bw044jty.jpg">
+<meta property="og:image" content="http://wx4.sinaimg.cn/mw690/005P5V6Qly1fyjuva8t0ej30c9044jtq.jpg">
+<meta property="og:updated_time" content="2018-12-26T01:51:08.591Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="git笔记">
 <meta name="twitter:description" content="Git和GitHub笔记设置签名 形式 用户名   tom Email地址： `goodMorning@atguigu.com` 作用：区分不同开发人员的身份 辨析：这里设置的签名和登录远程库（代码托管中心）的账号、密码没有任何关系     命令  项目级别/仓库级别：仅在当前本地库范围内有效    12git config user.name tom_pgit  config user.emai">
@@ -391,15 +394,40 @@
 <li>第三步：git add [文件名]</li>
 <li>第四步：git commit -m “备注”  </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">			git remote -v 查看当前所有远程地址别名</span><br><span class="line">			git remote add [别名] [远程地址]</span><br><span class="line">		```  </span><br><span class="line">	![](http://wx4.sinaimg.cn/mw690/005P5V6Qly1fyjuva8t0ej30c9044jtq.jpg)</span><br><span class="line">	</span><br><span class="line">* 推送  </span><br><span class="line">	* `git push [别名] [分支名]`  </span><br><span class="line"></span><br><span class="line">		![](http://wx1.sinaimg.cn/mw690/005P5V6Qly1fyjuvcyotzj30bw044jty.jpg)</span><br><span class="line">* 克隆  </span><br><span class="line">	* 命令  </span><br><span class="line">	`git clone [远程地址]`  </span><br><span class="line"></span><br><span class="line">		![](http://wx4.sinaimg.cn/mw690/005P5V6Qly1fyjuva8t0ej30c9044jtq.jpg)</span><br><span class="line">	* 效果  </span><br><span class="line">		* 完整的把远程库下载到本地</span><br><span class="line">		* 创建origin远程地址别名</span><br><span class="line">		* 初始化本地库</span><br><span class="line">* 拉取</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote -v 查看当前所有远程地址别名</span><br><span class="line">git remote add [别名] [远程地址]</span><br></pre></td></tr></table></figure>
+<p><img src="http://wx4.sinaimg.cn/mw690/005P5V6Qly1fyjuva8t0ej30c9044jtq.jpg" alt=""></p>
 </li>
 </ul>
 </li>
 </ul>
-<p>pull = fetch+merge<br>git fetch [远程库地址别名] [分支名]<br>git merge [远程库地址别名] [分支名]<br>git pull [远程库地址别名] [分支名]<br><code>`</code>    </p>
 </li>
 </ul>
 </li>
+<li><p>推送  </p>
+<ul>
+<li><p><code>git push [别名] [分支名]</code>  </p>
+<p>  <img src="http://wx1.sinaimg.cn/mw690/005P5V6Qly1fyjuvcyotzj30bw044jty.jpg" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>克隆  </p>
+<ul>
+<li><p>命令<br><code>git clone [远程地址]</code>  </p>
+<p>  <img src="http://wx4.sinaimg.cn/mw690/005P5V6Qly1fyjuva8t0ej30c9044jtq.jpg" alt=""></p>
+</li>
+<li>效果  <ul>
+<li>完整的把远程库下载到本地</li>
+<li>创建origin远程地址别名</li>
+<li>初始化本地库</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>拉取  <pre><code>pull = fetch+merge
+git fetch [远程库地址别名] [分支名]
+git merge [远程库地址别名] [分支名]
+git pull [远程库地址别名] [分支名]
+</code></pre></li>
 <li>解决冲突<ul>
 <li>要点<ul>
 <li>如果不是基于GitHub远程库的最新版所做的修改，不能推送，必须先拉取</li>
