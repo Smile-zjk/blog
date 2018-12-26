@@ -350,7 +350,7 @@
 <li>状态查看操作<br> <code>git status</code>  查看工作区、暂存区状态  </li>
 <li>添加操作<br> <code>git add [file name]</code> 将工作区的“新建/修改”添加到暂存区  </li>
 <li>提交操作<br> <code>git commit -m &quot;commit message&quot; [file name]</code> 将暂存区的内容提交到本地库  </li>
-<li>查看历史记录<br> <code>git log</code> 最完整形式<br> <code>git log --pretty=oneline</code>  每个只显示一行<br> <code>git log --oneline</code><br> <code>git reflog</code><br> <code>HEAD@{移动到当前版本需要多少步}</code>  </li>
+<li>查看历史记录<br> <code>git log</code> 最完整形式<br> <img src="http://wx2.sinaimg.cn/mw690/005P5V6Qly1fyjuucqe7mj30d802ngli.jpg" alt=""><br> <code>git log --pretty=oneline</code>  每个只显示一行<br> <img src="http://wx4.sinaimg.cn/mw690/005P5V6Qly1fyju6qd96sj30hq01k3yg.jpg" alt=""><br> <code>git log --oneline</code><br> <img src="http://wx2.sinaimg.cn/mw690/005P5V6Qly1fyju6qdc2rj308n01iq2r.jpg" alt=""><br> <code>git reflog</code><br> <img src="http://wx3.sinaimg.cn/mw690/005P5V6Qly1fyju6qdabyj30dt01ojr9.jpg" alt=""><br> <code>HEAD@{移动到当前版本需要多少步}</code>  </li>
 <li>基于索引值操作<br> <code>git reset --hard [局部索引值]</code><br>使用^符号：只能后退   <code>git reset --hard HEAD^</code>    一个^表示后退一步，n个表示后退n步<br>使用~符号：只能后退   <code>git reset --hard HEAD~3</code> 后退三步  <ul>
 <li>reset命令的三个参数对比<br><code>--soft</code> 仅仅在本地库移动HEAD指针<br><code>--mixed</code> 在本地移动HEAD指针，重置缓存区<br><code>--hard</code> 在本地库移动HEAD指针，重置缓存区，重置工作区</li>
 </ul>
@@ -367,41 +367,24 @@
 </li>
 <li><p>解决冲突</p>
 <ul>
-<li><p>冲突的表现</p>
+<li><p>冲突的表现<br><img src="http://wx3.sinaimg.cn/mw690/005P5V6Qly1fyju6qh03ej30j506aadb.jpg" alt=""></p>
 </li>
 <li><p>冲突的解决</p>
 <ul>
 <li>第一步：编辑文件，删除特殊符号</li>
 <li>第二步：把文件修改到满意的程度，保存退出</li>
 <li>第三步：git add [文件名]</li>
-<li>第四步：git commit -m “备注”<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git remote -v 查看当前所有远程地址别名</span><br><span class="line">git remote add [别名] [远程地址]</span><br></pre></td></tr></table></figure>
+<li>第四步：git commit -m “备注”<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">	git remote -v 查看当前所有远程地址别名</span><br><span class="line">	git remote add [别名] [远程地址]</span><br><span class="line">	```  </span><br><span class="line">	![](http://wx4.sinaimg.cn/mw690/005P5V6Qly1fyjuva8t0ej30c9044jtq.jpg)</span><br><span class="line">	</span><br><span class="line">* 推送  </span><br><span class="line">`git push [别名] [分支名]`  </span><br><span class="line">![](http://wx1.sinaimg.cn/mw690/005P5V6Qly1fyjuvcyotzj30bw044jty.jpg)</span><br><span class="line">* 克隆  </span><br><span class="line">	* 命令  </span><br><span class="line">	`git clone [远程地址]`  </span><br><span class="line">	![](http://wx2.sinaimg.cn/mw690/005P5V6Qly1fyjuvfbqywj30ck03hac5.jpg)</span><br><span class="line">	* 效果  </span><br><span class="line">		* 完整的把远程库下载到本地</span><br><span class="line">		* 创建origin远程地址别名</span><br><span class="line">		* 初始化本地库</span><br><span class="line">* 拉取</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
+<p>pull = fetch+merge<br>git fetch [远程库地址别名] [分支名]<br>git merge [远程库地址别名] [分支名]<br>git pull [远程库地址别名] [分支名]<br><code>`</code>    </p>
 </li>
 </ul>
 </li>
-</ul>
-<ul>
-<li>推送<br><code>git push [别名] [分支名]</code></li>
-<li>克隆  <ul>
-<li>命令<br><code>git clone [远程地址]</code></li>
-<li>效果  <ul>
-<li>完整的把远程库下载到本地</li>
-<li>创建origin远程地址别名</li>
-<li>初始化本地库</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>拉取  <pre><code>pull = fetch+merge
-git fetch [远程库地址别名] [分支名]
-git merge [远程库地址别名] [分支名]
-git pull [远程库地址别名] [分支名]
-</code></pre></li>
 <li>解决冲突<ul>
 <li>要点<ul>
 <li>如果不是基于GitHub远程库的最新版所做的修改，不能推送，必须先拉取</li>
