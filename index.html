@@ -229,6 +229,149 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.fengyinxue.cn/2019/03/17/看雪CTF第一题流浪者/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="枫吟雪">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="枫吟雪的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/17/看雪CTF第一题流浪者/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-17T20:59:19+08:00">
+                2019-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/03/17/看雪CTF第一题流浪者/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/03/17/看雪CTF第一题流浪者/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/03/17/看雪CTF第一题流浪者/" class="leancloud_visitors" data-flag-title="">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="看雪ctf-第一题-流浪者-wp"><a href="#看雪ctf-第一题-流浪者-wp" class="headerlink" title="看雪ctf 第一题 流浪者 wp"></a>看雪ctf 第一题 流浪者 wp</h1><p> &ensp;&ensp;打开程序，提示要验证password，载入OD，按照签到题的思路，改了一个跳转，出现了提示框pass，但是没有flag，应该不是这种思路（我是一个刚入手的萌新，可能没改全，所以出不来flag，只能换一个思路了）。一步一步调试，发现程序比较的字符串和我输入的不一样，我输入了一堆1，但是发现最终比较的是一堆b，所以应该是中间做了一些处理，如图<img src="http://ww1.sinaimg.cn/large/0071ouepgy1g164egoz4bj30mx09vt9a.jpg" alt="image">，重新调试，发现了一个循环体，如图<img src="http://ww1.sinaimg.cn/large/0071ouepgy1g164egoz4bj30mx09vt9a.jpg" alt="image">，记录下循环体的地址0x40181b。<br> &ensp;&ensp;用IDA打开程序，跳转到0x40181b，查看伪代码，<img src="http://ww1.sinaimg.cn/large/0071ouepgy1g164egoz4bj30mx09vt9a.jpg" alt="image">,发现了字符串比较函数，如图中方框所示，如果Str1与”KanXueCTF2019JustForhappy”相等，则运行函数sub_401770()，双击进去查看，发现是通过的函数，然后往上看，aAbcdefhiabcde是一个字符串，完整的字符串为’abcdefghiABCDEFGHIJKLMNjklmn0123456789opqrstuvwxyzOPQRSTUVWXYZ’,然后查看传进来的参数a1，<img src="http://ww1.sinaimg.cn/large/0071ouepgy1g164egoz4bj30mx09vt9a.jpg" alt="image">,在ans函数名处按’x’查看调用ans函数的地方，跟过去看看，发现了另一个函数。<br> 通过分析，整理一下思路，输入一个字符串，然后用图中核心算法生成一个数组v5，v5是一个偏移量的列表，然后将这个列表传入ans（a1）函数，得到Str1,相当于下面代码的赋值。<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for(int i=0;i&lt;25;i++)&#123;</span><br><span class="line">    Str[i] = aAbcdefhiabcde[a[i]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p> 写一个python脚本是复原这个算法，就可以得到应该输入的字符串了<img src="http://ww1.sinaimg.cn/large/0071ouepgy1g164egoz4bj30mx09vt9a.jpg" alt="image"><br> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"><span class="comment"># coding=UTF-8</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getf</span><span class="params">(v5, i)</span>:</span></span><br><span class="line">	<span class="keyword">global</span> p,flag</span><br><span class="line">	<span class="keyword">if</span> p &lt; <span class="number">25</span> <span class="keyword">and</span> v5 == position[p] :</span><br><span class="line">		<span class="comment"># print(content[i],'p:',p)</span></span><br><span class="line">		flag += content[i]</span><br><span class="line">		p += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getPosition</span><span class="params">(KK,content,position)</span>:</span>					</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> KK:</span><br><span class="line">		<span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,len(content)):</span><br><span class="line">			<span class="keyword">if</span> i == content[j]:</span><br><span class="line">				position.append(j)	</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">getflag</span><span class="params">(content,v5)</span>:</span>								<span class="comment"># 还原算法</span></span><br><span class="line">	<span class="keyword">for</span> m <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">25</span>):								<span class="comment"># 因为KK是长度为25的字符串，所以这里循环25次</span></span><br><span class="line">		<span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(content)):					<span class="comment"># 遍历content,相当于爆破，找到v5(也就是a1)</span></span><br><span class="line">			num = ord(content[i])</span><br><span class="line">			<span class="keyword">if</span> num &gt; <span class="number">57</span> <span class="keyword">or</span> num &lt; <span class="number">48</span>:</span><br><span class="line">				<span class="keyword">if</span> num &gt; <span class="number">122</span> <span class="keyword">or</span> num &lt; <span class="number">97</span>:</span><br><span class="line">					<span class="keyword">if</span> num &gt; <span class="number">90</span> <span class="keyword">or</span> num &lt; <span class="number">65</span>:</span><br><span class="line">						<span class="keyword">pass</span></span><br><span class="line">					<span class="keyword">else</span>:</span><br><span class="line">						v5 = num - <span class="number">29</span></span><br><span class="line">				<span class="keyword">else</span>:</span><br><span class="line">					v5 = num - <span class="number">87</span></span><br><span class="line">			<span class="keyword">else</span>:</span><br><span class="line">				v5 = num - <span class="number">48</span></span><br><span class="line">			getf(v5, i)	</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	content = <span class="string">'abcdefghiABCDEFGHIJKLMNjklmn0123456789opqrstuvwxyzOPQRSTUVWXYZ'</span></span><br><span class="line">	KK = <span class="string">'KanXueCTF2019JustForhappy'</span></span><br><span class="line">	p = <span class="number">0</span></span><br><span class="line">	position = []</span><br><span class="line">	v5 = <span class="number">0</span></span><br><span class="line">	flag = <span class="string">''</span></span><br><span class="line">	getPosition(KK,content,position)     <span class="comment"># 获取最终要比较的字符串KK的每个字符在content中的位置变换(也就是a1)</span></span><br><span class="line">	print(position)</span><br><span class="line">	getflag(content,v5)					 </span><br><span class="line">	print(flag)</span><br></pre></td></tr></table></figure></p>
+<p> 最后感谢DeeLMind大佬，之前卡在算法那不知道怎么写脚本复现，看了大佬的视频后(<a href="https://www.bilibili.com/video/av46108107)参照大佬的脚本后进行了修改，视频讲的很细，建议萌新去看一下(大佬就直接忽略吧)。" target="_blank" rel="noopener">https://www.bilibili.com/video/av46108107)参照大佬的脚本后进行了修改，视频讲的很细，建议萌新去看一下(大佬就直接忽略吧)。</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://blog.fengyinxue.cn/2018/12/26/git笔记/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -477,300 +620,6 @@ git pull [远程库地址别名] [分支名]
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.fengyinxue.cn/2018/11/05/京津冀比赛感想/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="枫吟雪">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫吟雪的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/05/京津冀比赛感想/" itemprop="url">京津冀比赛小结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-05T20:31:40+08:00">
-                2018-11-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/11/05/京津冀比赛感想/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/11/05/京津冀比赛感想/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/11/05/京津冀比赛感想/" class="leancloud_visitors" data-flag-title="京津冀比赛小结">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h2><hr>
-<p>&emsp;&emsp;此次北京之旅，参加了一次真正意义上的比赛。通过这次比赛，了解到自己的知识的匮乏，认识到和大牛之间的差距真的不是一星半点的，连望其项背都没有资格。人家是革命尚未成功，我这是革命尚未开始，不过真正的比赛才刚刚开始，起步输了不代表就输定了。我想信会有那么一天，我可以和这些大牛一样优秀，可以和他们一起探讨问题，或者指点指点他们，哈哈，人嘛，活着得有目标和梦想，没有梦想，那和咸鱼有什么区别。今年我是以研一新生的身份去参加比赛的，明年，我可是作为研二带着研一新生去参加比赛，水平太low了可不行，努力学习一年，争取明年当个大腿。</p>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><hr>
-<p>&emsp;&emsp;这次比赛前半部分是夺旗赛，总共20道题，4道Web，4道Crypto，4道Misc，4道PWN，4道Reverse。由于作为新生，我之前准备的是密码和隐写以及杂项，通过刷实验吧、Bugku和i春秋的题，已经算是入门了，也仅仅是入门。这次我负责的8道题，仅仅解出来了一个签到题，非常的惭愧，这次折戟最主要的原因，还是自己的代码能力不足，看不懂他给的加密过程，不懂加密过程，就无法下手了。还有一方面是自己做过的题比较基础，出来的时间比较早，而这次比赛的题比较新颖。PWN是这次比赛新加入的题型，所以我们队伍都没有人准备这个方向，之前听说过PWN这个词，听说以后的CTF比赛有两个大头，一个是Web，一个就是PWN，而且PWN涉及到汇编，入手有难度。<br>&emsp;&emsp;这次比赛后半部分是攻防，在比赛的一开始就被大神在我们网站的每一个文件夹里放了一个后门脚本，估计是清华的大大，还是由于编程能力差，处理不了这些脚本，手动一个个删不现实，而且显得太过愚蠢了。一进网站根目录，有一个door.php的后门，这个是出题人故意留的，应该就是给我们这些小菜鸟留的吧。首先先修改了自己的一句话木马的密码，然后就是拼手速的时候，用原始密码去连接别人的靶机，刷分。一开始我们的队伍每回合都会丢10分，应该是清华那个处理不了的后门，到第10轮的时候，开始丢40分，这就有点不正常了。突然想起来，师姐一开始让我把源码down下来用D盾查一下后门，我用之前给的代码老是出错，就放弃了，后来用winSCP(也就是图形化的ftp)连接上我的服务器，可以直接把源码拖下来的，但是可能是经验不足或者有点紧张，就给忘了，在丢分40后才想起来，扫了一下发现了一个隐藏后门，不知道是出题人的还是其他队伍留下的。然后就用这个隐藏的后门去攻击别人的靶机，虽然最后总成绩不是很理想，但是感觉这个攻防赛挺有意思，以前没有过类似的比赛或者模拟比赛，只能看别人的博客来粗略的了解一下流程。真正比赛的时候显得手忙脚乱的，而且不会写脚本，也不会用别人的脚本，完全就是个经验宝宝。</p>
-<hr>
-<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><hr>
-<ul>
-<li>熟练掌握一门语言，就python吧，写爬虫python比较好用</li>
-<li>入门PWN，能解出来简单和中等难度的题</li>
-<li>学习linux，学会管理网站，为渗透打下基础</li>
-</ul>
-<hr>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.fengyinxue.cn/2018/10/29/我的第一篇文章/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="枫吟雪">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="枫吟雪的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/29/我的第一篇文章/" itemprop="url">我的第一篇文章</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-29T21:44:10+08:00">
-                2018-10-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/29/我的第一篇文章/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/29/我的第一篇文章/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/10/29/我的第一篇文章/" class="leancloud_visitors" data-flag-title="我的第一篇文章">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="缘由"><a href="#缘由" class="headerlink" title="缘由"></a>缘由</h2><p>  &ensp;&ensp;想弄一个自己的博客，一开始用的WordPress框架，安装和管理都比较简单，适合那些没有编程基础的人，但是看着有点丑，做ctf题的时候经常参考别人的博客，发现他们的博客都挺好看的，去百度一查发现他们用的是hexo。作为一个小白，对这些没啥概念，单纯觉得hexo比较好看，可以自己在本地上调试，然后发布到网上，现在还没有学前端，但是留一个空间，以后慢慢学，再装饰自己的博客。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -817,7 +666,7 @@ git pull [远程库地址别名] [分支名]
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -825,15 +674,6 @@ git pull [远程库地址别名] [分支名]
 
             
 
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">标签</span>
-                
-              </div>
             
 
           </nav>
@@ -867,7 +707,7 @@ git pull [远程库地址别名] [分支名]
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
